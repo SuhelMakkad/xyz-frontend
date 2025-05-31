@@ -6,6 +6,17 @@ export default {
     more: 'المزيد',
     close: 'إغلاق',
   },
+  error: {
+    title: 'حدث خطأ',
+    description: 'حدث خطأ ما. يرجى المحاولة مرة أخرى أو الاتصال بالدعم إذا استمرت المشكلة.',
+    copyErrorTitle: 'نسخ الخطأ',
+    copied: 'تم النسخ',
+    tryAgain: 'حاول مرة أخرى',
+    copySuccess: 'تم النسخ إلى الحافظة',
+    copySuccessDescription: 'تم نسخ رسالة الخطأ إلى الحافظة',
+    copyError: 'فشل النسخ',
+    copyErrorDescription: 'تعذر نسخ رسالة الخطأ إلى الحافظة',
+  },
   pageTitles: {
     documents: 'المستندات',
     dashboard: 'لوحة التحكم',

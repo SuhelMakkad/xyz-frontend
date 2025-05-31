@@ -6,6 +6,17 @@ export default {
     more: 'More',
     close: 'Close',
   },
+  error: {
+    title: 'Error Occurred',
+    description: 'Something went wrong. Please try again or contact support if the issue persists.',
+    copyErrorTitle: 'Copy Error',
+    copied: 'Copied',
+    tryAgain: 'Try Again',
+    copySuccess: 'Copied to clipboard',
+    copySuccessDescription: 'Error message has been copied to your clipboard',
+    copyError: 'Failed to copy',
+    copyErrorDescription: 'Could not copy the error message to clipboard',
+  },
   pageTitles: {
     documents: 'Documents',
     dashboard: 'Dashboard',
