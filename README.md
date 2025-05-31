@@ -1,17 +1,20 @@
 ## Local Setup
 
 1. **Clone the repository**:
+
    ```bash
    git clone <repository-url>
    cd <project-directory>
    ```
 
 2. **Install dependencies**:
+
    ```bash
    pnpm install
    ```
 
 3. **Run the development server**:
+
    ```bash
    pnpm dev
    ```
@@ -21,11 +24,13 @@
 ## Deployment
 
 1. **Build the Next.js application**:
+
    ```bash
    pnpm build
    ```
 
 2. **Deploy using Terraform**:
+
    ```bash
    # Navigate to terraform directory
    cd terraform
@@ -40,7 +45,8 @@
    terraform apply
    ```
 
-4. **Upload the static site to S3**:
+3. **Upload the static site to S3**:
+
    ```bash
    # Get the S3 bucket name from Terraform output
    S3_BUCKET=$(terraform output -raw s3_bucket_name)
@@ -49,7 +55,8 @@
    aws s3 sync ../out/ s3://$S3_BUCKET/ --delete
    ```
 
-5. **Invalidate CloudFront cache**:
+4. **Invalidate CloudFront cache**:
+
    ```bash
    # Get the CloudFront distribution ID from Terraform output
    CF_DISTRIBUTION_ID=$(terraform output -raw cloudfront_distribution_id)
@@ -59,6 +66,7 @@
    ```
 
 After deployment, your site will be available at the CloudFront URL shown in the Terraform output:
+
 ```bash
 terraform output website_url
 ```
