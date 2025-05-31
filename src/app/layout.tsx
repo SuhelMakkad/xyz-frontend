@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
+import { setStaticParamsLocale } from 'next-international/server';
 import { Geist, Geist_Mono } from 'next/font/google';
 
+import { I18nProvider } from './components/i18n-provider';
 import { ThemeProvider } from './components/theme-provider';
 import { TopLoader } from './components/top-loader';
 import './globals.css';
@@ -24,11 +26,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  setStaticParamsLocale('en');
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <TopLoader />
-        <ThemeProvider>{children}</ThemeProvider>
+        <I18nProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );
