@@ -18,35 +18,38 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
+import { useI18n } from '@/locales/client';
+import { TranslationKey } from '@/locales/types';
 
 export function NavDocuments({
   items,
 }: {
   items: {
-    name: string;
+    title: TranslationKey;
     url: string;
     icon: Icon;
   }[];
 }) {
   const { isMobile } = useSidebar();
+  const t = useI18n();
 
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Documents</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('sidebar.documents.title')}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
+          <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild>
               <a href={item.url}>
                 <item.icon />
-                <span>{item.name}</span>
+                <span>{t(item.title)}</span>
               </a>
             </SidebarMenuButton>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover className="data-[state=open]:bg-accent rounded-sm">
                   <IconDots />
-                  <span className="sr-only">More</span>
+                  <span className="sr-only">{t('sidebar.documents.more')}</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -56,16 +59,16 @@ export function NavDocuments({
               >
                 <DropdownMenuItem>
                   <IconFolder />
-                  <span>Open</span>
+                  <span>{t('sidebar.documents.actions.open')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <IconShare3 />
-                  <span>Share</span>
+                  <span>{t('sidebar.documents.actions.share')}</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem variant="destructive">
                   <IconTrash />
-                  <span>Delete</span>
+                  <span>{t('sidebar.documents.actions.delete')}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -74,7 +77,7 @@ export function NavDocuments({
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
             <IconDots className="text-sidebar-foreground/70" />
-            <span>More</span>
+            <span>{t('sidebar.documents.more')}</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

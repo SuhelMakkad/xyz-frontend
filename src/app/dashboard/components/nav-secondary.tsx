@@ -11,17 +11,21 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useI18n } from '@/locales/client';
+import { TranslationKey } from '@/locales/types';
 
 export function NavSecondary({
   items,
   ...props
 }: {
   items: {
-    title: string;
+    title: TranslationKey;
     url: string;
     icon: Icon;
   }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const t = useI18n();
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
@@ -31,7 +35,7 @@ export function NavSecondary({
               <SidebarMenuButton asChild>
                 <a href={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span>{t(item.title)}</span>
                 </a>
               </SidebarMenuButton>
             </SidebarMenuItem>

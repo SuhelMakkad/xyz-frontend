@@ -71,6 +71,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useI18n } from '@/locales/client';
 
 const DraggableRow = <T extends { id: string | number }>({ row }: { row: Row<T> }) => {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -100,10 +101,17 @@ const DraggableRow = <T extends { id: string | number }>({ row }: { row: Row<T> 
 export const DataTable = <T extends { id: string | number }>({
   data: initialData,
   columns,
+  viewOptions = [],
+  defaultView = 'outline',
+  onAddSection,
 }: {
   data: T[];
   columns: ColumnDef<T>[];
+  viewOptions?: { value: string; label: string; badge?: number }[];
+  defaultView?: string;
+  onAddSection?: () => void;
 }) => {
+  const t = useI18n();
   const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
@@ -159,39 +167,38 @@ export const DataTable = <T extends { id: string | number }>({
   }
 
   return (
-    <Tabs defaultValue="outline" className="w-full flex-col justify-start gap-6">
+    <Tabs defaultValue={defaultView} className="w-full flex-col justify-start gap-6">
       <div className="flex items-center justify-between">
         <Label htmlFor="view-selector" className="sr-only">
-          View
+          {t('dataTable.viewHeader')}
         </Label>
-        <Select defaultValue="outline">
+        <Select defaultValue={defaultView}>
           <SelectTrigger className="flex w-fit @4xl/main:hidden" size="sm" id="view-selector">
-            <SelectValue placeholder="Select a view" />
+            <SelectValue placeholder={t('dataTable.selectView')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="outline">Outline</SelectItem>
-            <SelectItem value="past-performance">Past Performance</SelectItem>
-            <SelectItem value="key-personnel">Key Personnel</SelectItem>
-            <SelectItem value="focus-documents">Focus Documents</SelectItem>
+            {viewOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
         <TabsList className="**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex">
-          <TabsTrigger value="outline">Outline</TabsTrigger>
-          <TabsTrigger value="past-performance">
-            Past Performance <Badge variant="secondary">3</Badge>
-          </TabsTrigger>
-          <TabsTrigger value="key-personnel">
-            Key Personnel <Badge variant="secondary">2</Badge>
-          </TabsTrigger>
-          <TabsTrigger value="focus-documents">Focus Documents</TabsTrigger>
+          {viewOptions.map((option) => (
+            <TabsTrigger key={option.value} value={option.value}>
+              {option.label}
+              {option.badge !== undefined && <Badge variant="secondary">{option.badge}</Badge>}
+            </TabsTrigger>
+          ))}
         </TabsList>
         <div className="flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm">
                 <IconLayoutColumns />
-                <span className="hidden lg:inline">Customize Columns</span>
-                <span className="lg:hidden">Columns</span>
+                <span className="hidden lg:inline">{t('dataTable.customizeColumns')}</span>
+                <span className="lg:hidden">{t('dataTable.columns')}</span>
                 <IconChevronDown />
               </Button>
             </DropdownMenuTrigger>
@@ -213,13 +220,15 @@ export const DataTable = <T extends { id: string | number }>({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" size="sm">
-            <IconPlus />
-            <span className="hidden lg:inline">Add Section</span>
-          </Button>
+          {onAddSection && (
+            <Button variant="outline" size="sm" onClick={onAddSection}>
+              <IconPlus />
+              <span className="hidden lg:inline">{t('dataTable.addSection')}</span>
+            </Button>
+          )}
         </div>
       </div>
-      <TabsContent value="outline" className="relative flex flex-col gap-4 overflow-auto">
+      <TabsContent value={defaultView} className="relative flex flex-col gap-4 overflow-auto">
         <div className="overflow-hidden rounded-lg border">
           <DndContext
             collisionDetection={closestCenter}
@@ -254,7 +263,7 @@ export const DataTable = <T extends { id: string | number }>({
                 ) : (
                   <TableRow>
                     <TableCell colSpan={columns.length} className="h-24 text-center">
-                      No results.
+                      {t('dataTable.noResults')}
                     </TableCell>
                   </TableRow>
                 )}
@@ -262,23 +271,21 @@ export const DataTable = <T extends { id: string | number }>({
             </Table>
           </DndContext>
         </div>
-        <div className="flex items-center justify-between px-4">
-          <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-            {table.getFilteredSelectedRowModel().rows.length} of{' '}
-            {table.getFilteredRowModel().rows.length} row(s) selected.
+        <div className="flex items-center justify-between px-2">
+          <div className="flex-1 text-sm text-muted-foreground">
+            {table.getFilteredSelectedRowModel().rows.length} {t('dataTable.of')}{' '}
+            {table.getFilteredRowModel().rows.length} {t('dataTable.rowsSelected')}
           </div>
-          <div className="flex w-full items-center gap-8 lg:w-fit">
-            <div className="hidden items-center gap-2 lg:flex">
-              <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
-              </Label>
+          <div className="flex items-center space-x-6 lg:space-x-8">
+            <div className="flex items-center space-x-2">
+              <p className="text-sm font-medium">{t('dataTable.rowsPerPage')}</p>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
                 onValueChange={(value) => {
                   table.setPageSize(Number(value));
                 }}
               >
-                <SelectTrigger size="sm" className="w-20" id="rows-per-page">
+                <SelectTrigger className="h-8 w-[70px]">
                   <SelectValue placeholder={table.getState().pagination.pageSize} />
                 </SelectTrigger>
                 <SelectContent side="top">
@@ -290,61 +297,50 @@ export const DataTable = <T extends { id: string | number }>({
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+            <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+              {t('dataTable.page')} {table.getState().pagination.pageIndex + 1} {t('dataTable.of')}{' '}
+              {table.getPageCount()}
             </div>
-            <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <div className="flex items-center space-x-2">
               <Button
                 variant="outline"
                 className="hidden h-8 w-8 p-0 lg:flex"
                 onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}
               >
-                <span className="sr-only">Go to first page</span>
-                <IconChevronsLeft />
+                <span className="sr-only">{t('dataTable.goToFirstPage')}</span>
+                <IconChevronsLeft className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
-                className="size-8"
-                size="icon"
+                className="h-8 w-8 p-0"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
-                <span className="sr-only">Go to previous page</span>
-                <IconChevronLeft />
+                <span className="sr-only">{t('dataTable.goToPreviousPage')}</span>
+                <IconChevronLeft className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
-                className="size-8"
-                size="icon"
+                className="h-8 w-8 p-0"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
-                <span className="sr-only">Go to next page</span>
-                <IconChevronRight />
+                <span className="sr-only">{t('dataTable.goToNextPage')}</span>
+                <IconChevronRight className="h-4 w-4" />
               </Button>
               <Button
                 variant="outline"
-                className="hidden size-8 lg:flex"
-                size="icon"
+                className="hidden h-8 w-8 p-0 lg:flex"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}
               >
-                <span className="sr-only">Go to last page</span>
-                <IconChevronsRight />
+                <span className="sr-only">{t('dataTable.goToLastPage')}</span>
+                <IconChevronsRight className="h-4 w-4" />
               </Button>
             </div>
           </div>
         </div>
-      </TabsContent>
-      <TabsContent value="past-performance" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
-      </TabsContent>
-      <TabsContent value="key-personnel" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
-      </TabsContent>
-      <TabsContent value="focus-documents" className="flex flex-col px-4 lg:px-6">
-        <div className="aspect-video w-full flex-1 rounded-lg border border-dashed"></div>
       </TabsContent>
     </Tabs>
   );
