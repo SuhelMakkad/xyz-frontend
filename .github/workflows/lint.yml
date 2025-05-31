@@ -50,6 +50,13 @@ jobs:
       - name: Check formatting
         run: pnpm format:check
 
+  validate-translations:
+    name: Validate Translations
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
       - name: Setup Buns
         uses: oven-sh/setup-bun@v2
 
