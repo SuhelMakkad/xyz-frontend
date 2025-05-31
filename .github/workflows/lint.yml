@@ -4,9 +4,13 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   lint:
+    name: Lint and Format Check
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +24,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9
           run_install: false
 
       - name: Get pnpm store directory
