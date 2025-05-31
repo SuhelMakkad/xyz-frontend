@@ -1,12 +1,10 @@
 'use client';
 
 import {
-  IconCamera,
+  Icon,
   IconChartBar,
   IconDashboard,
   IconDatabase,
-  IconFileAi,
-  IconFileDescription,
   IconFileWord,
   IconFolder,
   IconHelp,
@@ -33,6 +31,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useI18n } from '@/locales/client';
+import { TranslationKey } from '@/locales/types';
+
+type NavMainItem = {
+  title: TranslationKey;
+  url: string;
+  icon?: Icon;
+};
 
 const data = {
   user: {
@@ -42,116 +48,70 @@ const data = {
   },
   navMain: [
     {
-      title: 'Dashboard',
+      title: 'sidebar.main.dashboard',
       url: '#',
       icon: IconDashboard,
     },
     {
-      title: 'Lifecycle',
+      title: 'sidebar.main.lifecycle',
       url: '#',
       icon: IconListDetails,
     },
     {
-      title: 'Analytics',
+      title: 'sidebar.main.analytics',
       url: '#',
       icon: IconChartBar,
     },
     {
-      title: 'Projects',
+      title: 'sidebar.main.projects',
       url: '#',
       icon: IconFolder,
     },
     {
-      title: 'Team',
+      title: 'sidebar.main.team',
       url: '#',
       icon: IconUsers,
     },
-  ],
-  navClouds: [
-    {
-      title: 'Capture',
-      icon: IconCamera,
-      isActive: true,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Proposal',
-      icon: IconFileDescription,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Prompts',
-      icon: IconFileAi,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-  ],
+  ] satisfies NavMainItem[],
   navSecondary: [
     {
-      title: 'Settings',
+      title: 'sidebar.secondary.settings',
       url: '#',
       icon: IconSettings,
     },
     {
-      title: 'Get Help',
+      title: 'sidebar.secondary.getHelp',
       url: '#',
       icon: IconHelp,
     },
     {
-      title: 'Search',
+      title: 'sidebar.secondary.search',
       url: '#',
       icon: IconSearch,
     },
-  ],
+  ] satisfies NavMainItem[],
   documents: [
     {
-      name: 'Data Library',
+      title: 'sidebar.documents.dataLibrary',
       url: '#',
       icon: IconDatabase,
     },
     {
-      name: 'Reports',
+      title: 'sidebar.documents.reports',
       url: '#',
       icon: IconReport,
     },
     {
-      name: 'Word Assistant',
+      title: 'sidebar.documents.wordAssistant',
       url: '#',
       icon: IconFileWord,
     },
-  ],
+  ] satisfies NavMainItem[],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useI18n();
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -160,7 +120,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">{t('sidebar.company')}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

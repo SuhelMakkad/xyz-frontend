@@ -1,0 +1,187 @@
+export default {
+  metadata: {
+    title: 'Nawah',
+  },
+  common: {
+    more: 'More',
+    close: 'Close',
+  },
+  pageTitles: {
+    documents: 'Documents',
+    dashboard: 'Dashboard',
+    lifecycle: 'Lifecycle',
+    analytics: 'Analytics',
+    projects: 'Projects',
+    team: 'Team',
+    settings: 'Settings',
+  },
+  navigation: {
+    title: 'Nawah',
+    language: 'Language',
+    languages: {
+      en: 'English',
+      ar: 'العربية',
+    },
+  },
+  sidebar: {
+    sidebar: 'Sidebar',
+    sidebarMobile: 'Displays the mobile sidebar.',
+    sidebarTrigger: 'Toggle Sidebar',
+    company: 'Acme Inc.',
+    quickCreate: 'Quick Create',
+    inbox: 'Inbox',
+    main: {
+      dashboard: 'Dashboard',
+      lifecycle: 'Lifecycle',
+      analytics: 'Analytics',
+      projects: 'Projects',
+      team: 'Team',
+    },
+    clouds: {
+      capture: 'Capture',
+      proposal: 'Proposal',
+      prompts: 'Prompts',
+      items: {
+        activeProposals: 'Active Proposals',
+        archived: 'Archived',
+      },
+    },
+    secondary: {
+      settings: 'Settings',
+      getHelp: 'Get Help',
+      search: 'Search',
+    },
+    documents: {
+      title: 'Documents',
+      more: 'More',
+      actions: {
+        open: 'Open',
+        share: 'Share',
+        delete: 'Delete',
+      },
+      dataLibrary: 'Data Library',
+      reports: 'Reports',
+      wordAssistant: 'Word Assistant',
+    },
+    user: {
+      account: 'Account',
+      billing: 'Billing',
+      notifications: 'Notifications',
+      logout: 'Log out',
+    },
+  },
+  homePage: {
+    dashboard: 'Dashboard',
+  },
+  dashboard: {
+    cards: {
+      revenue: {
+        description: 'Total Revenue',
+        status: 'Trending up this month',
+        subtext: 'Visitors for the last 6 months',
+      },
+      customers: {
+        description: 'New Customers',
+        status: 'Down 20% this period',
+        subtext: 'Acquisition needs attention',
+      },
+      accounts: {
+        description: 'Active Accounts',
+        status: 'Strong user retention',
+        subtext: 'Engagement exceed targets',
+      },
+      growth: {
+        description: 'Growth Rate',
+        status: 'Steady performance increase',
+        subtext: 'Meets growth projections',
+      },
+    },
+  },
+  dataTable: {
+    viewHeader: 'View',
+    selectView: 'Select a view',
+    customizeColumns: 'Customize Columns',
+    columns: 'Columns',
+    addSection: 'Add Section',
+    noResults: 'No results.',
+    of: 'of',
+    rowsSelected: 'row(s) selected.',
+    rowsPerPage: 'Rows per page',
+    page: 'Page',
+    goToFirstPage: 'Go to first page',
+    goToPreviousPage: 'Go to previous page',
+    goToNextPage: 'Go to next page',
+    goToLastPage: 'Go to last page',
+    dragToReorder: 'Drag to reorder',
+    selectAll: 'Select all',
+    selectRow: 'Select row',
+    header: 'Header',
+    sectionType: 'Section Type',
+    status: 'Status',
+    target: 'Target',
+    limit: 'Limit',
+    reviewer: 'Reviewer',
+    assignReviewer: 'Assign reviewer',
+    openMenu: 'Open menu',
+    actions: {
+      edit: 'Edit',
+      makeCopy: 'Make a copy',
+      favorite: 'Favorite',
+      delete: 'Delete',
+    },
+    drawer: {
+      showingVisitors: 'Showing total visitors for the last 6 months',
+      trendingUp: 'Trending up by 5.2% this month',
+      visitorDescription:
+        'Showing total visitors for the last 6 months. This is just some random text to test the layout. It spans multiple lines and should wrap around.',
+      type: {
+        label: 'Type',
+        placeholder: 'Select a type',
+        options: {
+          tableOfContents: 'Table of Contents',
+          executiveSummary: 'Executive Summary',
+          technicalApproach: 'Technical Approach',
+          design: 'Design',
+          capabilities: 'Capabilities',
+          focusDocuments: 'Focus Documents',
+          narrative: 'Narrative',
+          coverPage: 'Cover Page',
+        },
+      },
+      status: {
+        label: 'Status',
+        placeholder: 'Select a status',
+        options: {
+          done: 'Done',
+          inProgress: 'In Progress',
+          notStarted: 'Not Started',
+        },
+      },
+      target: {
+        label: 'Target',
+      },
+      limit: {
+        label: 'Limit',
+      },
+      reviewer: {
+        label: 'Reviewer',
+        placeholder: 'Select a reviewer',
+        options: {
+          eddieLake: 'Eddie Lake',
+          jamikTashpulatov: 'Jamik Tashpulatov',
+          emilyWhalen: 'Emily Whalen',
+        },
+      },
+      buttons: {
+        submit: 'Submit',
+        done: 'Done',
+      },
+    },
+  },
+  theme: {
+    toggle: 'Toggle theme',
+    light: 'Light',
+    dark: 'Dark',
+    system: 'System',
+  },
+} as const;
